@@ -1,0 +1,56 @@
+/* Reset default styles for AirBnB-like design */
+:root {
+  font-family: "Circular", "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Force light color scheme only */
+  color-scheme: light;
+  color: #222222;
+  background-color: #ffffff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* AirBnB-style links */
+a {
+  font-weight: 500;
+  color: #FF5A5F;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #E04848;
+}
+
+/* Clean body styling */
+body {
+  margin: 0;
+  background-color: #ffffff;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* Remove default heading styles - let MUI theme handle it */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+/* Remove default button styles - let MUI handle it */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Ensure no dark theme styles apply */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #222222;
+    background-color: #ffffff;
+  }
+}
+

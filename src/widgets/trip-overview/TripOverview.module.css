@@ -1,0 +1,118 @@
+/* TripOverview Component Styles */
+
+
+.componentStack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.componentItem {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #ebebeb;
+  margin-bottom: 24px;
+}
+
+.componentItem:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+}
+
+.componentHeader {
+  margin-bottom: 8px;
+}
+
+.componentLabel {
+  font-weight: 500;
+}
+
+.changeButton {
+  min-width: 60px;
+  height: 32px;
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  align-self: center;
+}
+
+.componentDetails {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.componentDetailsWithButton {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.componentImage {
+  width: 240px;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.componentInfo {
+  flex: 1;
+}
+
+.componentName {
+  font-weight: 500;
+}
+
+.componentDescription {
+  margin-top: 4px;
+}
+
+.componentPrice {
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+
+.addonsHeader {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.addonsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.addonRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  min-height: 24px;
+  align-items: center;
+}
+
+.addonPrice {
+  font-weight: 500;
+}
+
+.totalSection {
+  margin-top: 40px;
+  margin-bottom: 0;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalLabel {
+  font-weight: 600;
+}
+
+.totalValue {
+  font-weight: 600;
+}

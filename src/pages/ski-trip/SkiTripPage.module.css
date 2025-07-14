@@ -1,0 +1,59 @@
+/* SkiTripPage Layout Styles */
+
+.pageContainer {
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+
+.contentWrapper {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.pageTitle {
+  margin-bottom: 32px;
+}
+
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.contentColumn {
+  flex: 1 1 60%;
+}
+
+.sidebarColumn {
+  flex: 1 1 40%;
+}
+
+.sidebarSticky {
+  position: sticky;
+  top: 24px;
+}
+
+.recommendationsBox {
+  margin-top: 48px;
+  padding: 32px;
+  background-color: #F7F7F7;
+  border-radius: 24px;
+  border: none;
+}
+
+.recommendationsTitle {
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.recommendationsText {
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (min-width: 960px) {
+  .mainLayout {
+    flex-direction: row;
+    gap: 120px;
+  }
+}

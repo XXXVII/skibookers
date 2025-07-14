@@ -1,0 +1,58 @@
+/* PriceSummary Component Styles */
+
+.card {
+  padding: 24px;
+}
+
+.header {
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.emptyState {
+  color: #717171;
+}
+
+.priceStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.priceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.priceLabel {
+  text-transform: capitalize;
+}
+
+.priceValue {
+  font-weight: 500;
+}
+
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.totalLabel {
+  font-weight: 600;
+}
+
+.totalValue {
+  font-weight: 600;
+}
+
+.disclaimer {
+  text-align: center;
+}
+
+.checkoutButton {
+  margin-top: 16px;
+}

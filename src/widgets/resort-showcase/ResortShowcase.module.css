@@ -1,0 +1,64 @@
+/* ResortShowcase Component Styles */
+
+.card {
+  overflow: hidden !important;
+  margin-bottom: 24px;
+  padding: 0 !important; /* Ensure no padding interferes with hero layout */
+}
+
+.heroContainer {
+  position: relative !important;
+  height: 300px !important;
+  background-size: cover !important;
+  background-position: center !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  border-radius: 12px !important; /* Match card border radius */
+  overflow: hidden !important;
+}
+
+.overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: linear-gradient(transparent 40%, rgba(0, 0, 0, 0.8)) !important;
+  border-radius: 12px !important;
+}
+
+.contentBox {
+  position: relative !important;
+  padding: 24px !important;
+  color: white !important;
+  width: 100% !important;
+  z-index: 2 !important; /* Ensure content appears above overlay */
+}
+
+.title {
+  font-weight: 600 !important;
+  margin-bottom: 16px !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+  color: white !important;
+}
+
+.description {
+  margin-bottom: 16px !important;
+  opacity: 1 !important;
+  color: white !important;
+  font-weight: 500 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+.chipContainer {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+.chip {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
