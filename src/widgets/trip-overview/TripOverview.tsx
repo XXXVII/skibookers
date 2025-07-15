@@ -17,14 +17,22 @@ export const TripOverview = ({ onCustomizeComponent }: TripOverviewProps) => {
   const totalPrice = useStore(priceStore.total);
   const isCalculating = useStore(priceStore.isCalculating);
 
-  const selectedAddons = useMemo(() => {
-    if (!availableComponents?.addons) return [];
-    
-    const addonIds = tripComponents.addons.map(addon => 
+  // Memoize addon IDs to prevent unnecessary Set recreation
+  const selectedAddonIds = useMemo(() => {
+    if (!tripComponents.addons.length) return [];
+    return tripComponents.addons.map(addon =>
       typeof addon === 'string' ? addon : addon.id
     );
-    return availableComponents.addons.filter(addon => addonIds.includes(addon.id));
-  }, [tripComponents.addons, availableComponents?.addons]);
+  }, [tripComponents.addons]);
+
+  // Memoize selected addons with more stable dependencies
+  const selectedAddons = useMemo(() => {
+    if (!availableComponents?.addons || !selectedAddonIds.length) return [];
+
+    // Create a Set for O(1) lookup instead of O(n) includes
+    const addonIdsSet = new Set(selectedAddonIds);
+    return availableComponents.addons.filter(addon => addonIdsSet.has(addon.id));
+  }, [selectedAddonIds, availableComponents?.addons]);
 
   const components = [
     { key: 'resort' as const, label: 'Resort', value: tripComponents.resort },
@@ -46,7 +54,7 @@ export const TripOverview = ({ onCustomizeComponent }: TripOverviewProps) => {
                 {label}
               </Typography>
             </Box>
-            
+
             <Box className={styles.componentDetailsWithButton}>
               <Box className={styles.componentDetails}>
                 {value ? (
@@ -90,14 +98,14 @@ export const TripOverview = ({ onCustomizeComponent }: TripOverviewProps) => {
             </Box>
           </Box>
         ))}
-        
+
         <Box className={styles.componentItem}>
           <Box className={styles.componentHeader}>
             <Typography variant="subtitle1" className={styles.componentLabel}>
               Add-ons
             </Typography>
           </Box>
-          
+
           <Box className={styles.componentDetailsWithButton}>
             <Box sx={{ flex: 1 }}>
               {selectedAddons && selectedAddons.length > 0 ? (
@@ -128,9 +136,9 @@ export const TripOverview = ({ onCustomizeComponent }: TripOverviewProps) => {
           </Box>
         </Box>
       </Stack>
-      
+
       <Divider className={styles.totalSection} />
-      
+
       <Box className={styles.totalRow}>
         <Typography variant="h6" className={styles.totalLabel}>
           Total Price

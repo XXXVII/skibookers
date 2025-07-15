@@ -43,8 +43,14 @@ const calculateAddonsPrice = (addons: PriceableComponent[] | string[]): number =
 // Store for calculated addon prices
 export const $addonsPriceCache = atom<number>(0);
 
-// Synchronous function to update addon prices
+// Sequence counter to prevent race conditions
+let priceUpdateSequence = 0;
+
+// Synchronous function to update addon prices with race condition protection
 const updateAddonsPrice = (addons: string[]) => {
+  // Increment sequence counter for this update
+  const currentSequence = ++priceUpdateSequence;
+  
   try {
     $priceStore.set({
       ...$priceStore.get(),
@@ -52,24 +58,38 @@ const updateAddonsPrice = (addons: string[]) => {
     });
 
     const price = calculateAddonsPrice(addons);
+    
+    // Check if this is still the latest update request
+    if (currentSequence !== priceUpdateSequence) {
+      // Newer update has been started, abandon this one
+      return;
+    }
+    
     $addonsPriceCache.set(price);
 
     // Trigger price breakdown recalculation
     const components = $tripComponents.get();
     const breakdown = calculatePriceBreakdown(components, price);
 
-    $priceStore.set({
-      breakdown,
-      isCalculating: false,
-      error: null,
-    });
+    // Final check before updating the store
+    if (currentSequence === priceUpdateSequence) {
+      $priceStore.set({
+        breakdown,
+        isCalculating: false,
+        error: null,
+      });
+    }
   } catch (error) {
     console.error('Failed to update addon prices:', error);
-    $priceStore.set({
-      ...$priceStore.get(),
-      error: 'Failed to calculate addon prices',
-      isCalculating: false,
-    });
+    
+    // Only update error state if this is still the latest update
+    if (currentSequence === priceUpdateSequence) {
+      $priceStore.set({
+        ...$priceStore.get(),
+        error: 'Failed to calculate addon prices',
+        isCalculating: false,
+      });
+    }
   }
 };
 
@@ -102,13 +122,73 @@ export const $priceBreakdown = computed([$tripComponents, $addonsPriceCache], (c
   return calculatePriceBreakdown(components, addonsPrice);
 });
 
-// Listen for addon changes and update prices asynchronously
-$tripComponents.listen((components) => {
-  if (Array.isArray(components.addons)) {
-    const addonIds = components.addons.map(addon => typeof addon === 'string' ? addon : addon.id);
-    updateAddonsPrice(addonIds);
+// Debounced price update manager with cleanup
+class PriceUpdateManager {
+  private timeout: ReturnType<typeof setTimeout> | null = null;
+  private unsubscribe: (() => void) | null = null;
+
+  constructor() {
+    // Listen for addon changes and update prices asynchronously with debouncing
+    this.unsubscribe = $tripComponents.listen((components) => {
+      if (Array.isArray(components.addons)) {
+        this.debouncedUpdate(components.addons);
+      }
+    });
   }
-});
+
+  private debouncedUpdate = (addons: (string | { id: string })[]) => {
+    // Clear previous timeout to prevent race conditions
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+    
+    // Debounce price updates to prevent rapid sequential calls
+    this.timeout = setTimeout(() => {
+      const addonIds = addons.map(addon => typeof addon === 'string' ? addon : addon.id);
+      updateAddonsPrice(addonIds);
+      this.timeout = null;
+    }, 100); // 100ms debounce delay
+  };
+
+  public cleanup = () => {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+      this.timeout = null;
+    }
+    if (this.unsubscribe) {
+      this.unsubscribe();
+      this.unsubscribe = null;
+    }
+  };
+}
+
+// Global price update manager instance
+let priceUpdateManager: PriceUpdateManager | null = null;
+
+// Initialize price update manager lazily
+const initializePriceManager = () => {
+  if (!priceUpdateManager) {
+    priceUpdateManager = new PriceUpdateManager();
+  }
+  return priceUpdateManager;
+};
+
+// Initialize on module load
+initializePriceManager();
+
+// Export cleanup function for proper memory management
+export const cleanupPriceUpdates = () => {
+  if (priceUpdateManager) {
+    priceUpdateManager.cleanup();
+    priceUpdateManager = null;
+  }
+};
+
+// Cleanup on page unload/refresh
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', cleanupPriceUpdates);
+  window.addEventListener('unload', cleanupPriceUpdates);
+}
 
 // Computed total price
 export const $totalPrice = computed($priceBreakdown, (breakdown) => breakdown.total);

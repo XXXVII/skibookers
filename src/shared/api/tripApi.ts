@@ -1,5 +1,5 @@
 import yaml from 'js-yaml';
-import type { Addon, Flight, Hotel, Insurance, Resort, Room, Skipass, Transfer, TripData } from '../types';
+import type { Addon, TripData, TripComponent, BaseComponent } from '../types';
 
 let cachedTripData: TripData | null = null;
 
@@ -29,28 +29,28 @@ export const loadTripData = async (): Promise<TripData> => {
   }
 };
 
-export const getTripComponents = async () => {
+export const getTripComponents = async (): Promise<TripComponent> => {
   const data = await loadTripData();
 
-  // Helper function to find component by ID
-  const findComponentById = (components: Resort[] | Hotel[] | Room[] | Skipass[] | Transfer[] | Flight[] | Insurance[] | Addon[], id: string) => {
+  // Helper function to find component by ID with proper typing
+  const findComponentById = <T extends BaseComponent>(components: T[], id: string): T | null => {
     return components.find(component => component.id === id) || null;
   };
 
-  const findAddonsByIds = (addons: Addon[], ids: string[]) => {
+  const findAddonsByIds = (addons: Addon[], ids: string[]): Addon[] => {
     return ids
       .map(id => addons.find(addon => addon.id === id))
       .filter((addon): addon is Addon => addon !== undefined);
   };
 
   return {
-    resort: findComponentById(data.availableResorts || [], data.trip.resort) as Resort,
-    hotel: findComponentById(data.availableHotels || [], data.trip.hotel) as Hotel,
-    room: findComponentById(data.availableRooms || [], data.trip.room) as Room,
-    skipass: findComponentById(data.availableSkipasses || [], data.trip.skipass) as Skipass,
-    transfer: findComponentById(data.availableTransfers || [], data.trip.transfer) as Transfer,
-    flight: findComponentById(data.availableFlights || [], data.trip.flight) as Flight,
-    insurance: findComponentById(data.availableInsurance || [], data.trip.insurance) as Insurance,
+    resort: findComponentById(data.availableResorts || [], data.trip.resort),
+    hotel: findComponentById(data.availableHotels || [], data.trip.hotel),
+    room: findComponentById(data.availableRooms || [], data.trip.room),
+    skipass: findComponentById(data.availableSkipasses || [], data.trip.skipass),
+    transfer: findComponentById(data.availableTransfers || [], data.trip.transfer),
+    flight: findComponentById(data.availableFlights || [], data.trip.flight),
+    insurance: findComponentById(data.availableInsurance || [], data.trip.insurance),
     addons: findAddonsByIds(data.availableAddons || [], data.trip.addons),
   };
 };

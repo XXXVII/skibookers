@@ -1,10 +1,13 @@
 import { ThemeProvider } from './providers';
 import { SkiTripPage } from '../pages/ski-trip';
+import { ErrorBoundary } from '../shared/components';
 
 export const App = () => {
   return (
-    <ThemeProvider>
-      <SkiTripPage />
-    </ThemeProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+        <SkiTripPage />
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 };

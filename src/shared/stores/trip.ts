@@ -16,6 +16,11 @@ export interface AvailableComponents {
 export interface EnhancedTripState extends TripState {
   availableComponents: AvailableComponents | null;
   isDataLoaded: boolean;
+  userPreferences: {
+    vibe?: string;
+    budget?: string;
+    group?: string;
+  } | null;
 }
 
 // Initial state
@@ -35,6 +40,7 @@ const initialState: EnhancedTripState = {
   isDataLoaded: false,
   hasChanges: false,
   error: null,
+  userPreferences: null,
 };
 
 // Main trip store
@@ -59,6 +65,7 @@ export const $addons = computed($tripStore, (state) => state.components.addons);
 // Available components selectors
 export const $availableComponents = computed($tripStore, (state) => state.availableComponents);
 export const $isDataLoaded = computed($tripStore, (state) => state.isDataLoaded);
+export const $userPreferences = computed($tripStore, (state) => state.userPreferences);
 
 // Store actions
 export const tripActions = {
@@ -83,6 +90,7 @@ export const tripActions = {
       };
 
       $tripStore.setKey('availableComponents', availableComponents);
+      $tripStore.setKey('userPreferences', data.user?.preferences || null);
       $tripStore.setKey('isDataLoaded', true);
 
       // Initialize current trip components
@@ -189,6 +197,7 @@ export const tripStore = {
   isDataLoaded: $isDataLoaded,
   hasChanges: $hasChanges,
   error: $error,
+  userPreferences: $userPreferences,
   resort: $resort,
   hotel: $hotel,
   room: $room,

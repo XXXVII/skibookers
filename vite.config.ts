@@ -9,12 +9,26 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
+    // Enable tree-shaking optimization
+    minify: 'esbuild',
     // Ensure proper asset handling for GitHub Pages
     rollupOptions: {
       output: {
-        manualChunks: undefined,
+        manualChunks: {
+          // Separate MUI into its own chunk for better caching
+          'mui-core': ['@mui/material', '@mui/system'],
+          'mui-icons': ['@mui/icons-material'],
+          // Separate vendor libraries
+          'vendor': ['react', 'react-dom', 'nanostores', '@nanostores/react'],
+          // Separate YAML processing
+          'yaml': ['js-yaml'],
+        },
       },
     },
+  },
+  // Enable tree-shaking for dependencies
+  optimizeDeps: {
+    include: ['@mui/material', '@mui/system', '@mui/icons-material'],
   },
   // Handle YAML files and other assets
   assetsInclude: ['**/*.yml', '**/*.yaml'],

@@ -15,14 +15,14 @@ export const ComponentSelectionModal = ({componentType}: ComponentSelectionModal
   const isDataLoaded = useStore(tripStore.isDataLoaded);
   const isLoading = useStore(tripStore.isLoading);
   const error = useStore(tripStore.error);
-  
+
   const config = modalConfig[componentType];
   const isMultiple = config?.multiple || false;
 
   // Get available components for this type from the store
   const components = useMemo(() => {
     if (!availableComponents) return [];
-    
+
     const componentMap = {
       resort: availableComponents.resorts,
       hotel: availableComponents.hotels,
@@ -33,7 +33,7 @@ export const ComponentSelectionModal = ({componentType}: ComponentSelectionModal
       insurance: availableComponents.insurance,
       addons: availableComponents.addons,
     };
-    
+
     return componentMap[componentType] || [];
   }, [availableComponents, componentType]);
 
@@ -81,13 +81,13 @@ export const ComponentSelectionModal = ({componentType}: ComponentSelectionModal
       // Single selection - toggle selection (allow unselect)
       const currentComponent = tripComponents[componentType];
       const isCurrentlySelected = currentComponent !== null && !Array.isArray(currentComponent) && currentComponent.id === component.id;
-      
+
       if (isCurrentlySelected) {
         // Unselect by setting to null
-        tripStore.actions.setComponent(componentType, null as TripComponent[typeof componentType]);
+        tripStore.actions.setComponent(componentType, null);
       } else {
         // Select new component
-        tripStore.actions.setComponent(componentType, component as TripComponent[typeof componentType]);
+        tripStore.actions.setComponent(componentType, component);
       }
       modalStore.actions.close();
     }
@@ -96,7 +96,7 @@ export const ComponentSelectionModal = ({componentType}: ComponentSelectionModal
   const handleToggleMultiple = (component: ComponentData) => {
     const isSelected = selectedItemIds.has(component.id);
     const currentElements = Array.isArray(tripComponents[componentType])
-      ? tripComponents[componentType] as ComponentData[]
+      ? tripComponents[componentType]
       : [];
     let newElements: ComponentData[];
 
