@@ -1,0 +1,217 @@
+trip:
+  id: "ski-trip-001"
+  name: "Your Ski Trip"
+
+  resort: "alpine-heights"
+  hotel: "chalet-4star"
+
+  room: "double-breakfast"
+  skipass: "premium-3day"
+  flight: "business-class"
+  insurance: "comprehensive-coverage"
+  transfer: "private-transfer"
+
+  addons:
+    - "spa-access"
+    - "nightlife-pass"
+
+# Available Components
+availableResorts:
+  - id: "alpine-heights"
+    name: "Alpine Heights"
+    description: "Premium resort in Swiss Alps, intermediate-advanced slopes, luxury vibe"
+    region: "Swiss Alps"
+    difficulty: "Intermediate-Advanced"
+    vibe: "Luxury & Adventure"
+    image: "images/resort-1.jpg"
+    basePrice: 850
+  - id: "snow-peak"
+    name: "Snow Peak Resort"
+    description: "Family-friendly resort with beginner slopes"
+    region: "Austrian Alps"
+    difficulty: "Beginner-Intermediate"
+    vibe: "Family Fun"
+    image: "images/resort-2.jpg"
+    basePrice: 650
+  - id: "glacier-point"
+    name: "Glacier Point"
+    description: "Expert-level resort with extreme slopes"
+    region: "French Alps"
+    difficulty: "Advanced-Expert"
+    vibe: "Extreme Adventure"
+    image: "images/resort-3.jpg"
+    basePrice: 1200
+
+availableHotels:
+  - id: "chalet-4star"
+    name: "4* Chalet"
+    description: "near lifts"
+    type: "4-star"
+    basePrice: 450
+    image: "images/hotel-chalet-new.jpg"
+  - id: "luxury-lodge"
+    name: "5* Luxury Lodge"
+    description: "ski-in/ski-out access"
+    type: "5-star"
+    basePrice: 750
+    image: "images/hotel-luxury.jpg"
+  - id: "budget-inn"
+    name: "3* Mountain Inn"
+    description: "5 min walk to lifts"
+    type: "3-star"
+    basePrice: 280
+    image: "images/hotel-budget.jpg"
+
+availableRooms:
+  - id: "double-breakfast"
+    name: "Double Room with breakfast"
+    description: "Comfortable double room with mountain view and breakfast included"
+    type: "Double Room with breakfast"
+    occupancy: 2
+    amenities: ["breakfast", "mountain-view", "wifi"]
+    basePrice: 120
+    image: "images/room-double.jpg"
+  - id: "suite-balcony"
+    name: "Suite with balcony"
+    description: "Luxury suite with private balcony and premium amenities"
+    type: "Suite with balcony"
+    occupancy: 2
+    amenities: ["breakfast", "mountain-view", "balcony", "wifi", "minibar"]
+    basePrice: 220
+    image: "images/room-suite.jpg"
+  - id: "twin-basic"
+    name: "Twin Room (no breakfast)"
+    description: "Basic twin room with mountain view"
+    type: "Twin Room (no breakfast)"
+    occupancy: 2
+    amenities: ["mountain-view", "wifi"]
+    basePrice: 80
+    image: "images/room-twin.jpg"
+
+availableSkipasses:
+  - id: "premium-3day"
+    name: "3 days, premium zone"
+    description: "3-day premium ski pass with access to all slopes"
+    days: 3
+    zone: "Premium"
+    level: "All slopes"
+    basePrice: 180
+    image: "images/skipass-premium.jpg"
+  - id: "standard-3day"
+    name: "3 days, standard zone"
+    description: "3-day standard ski pass for beginner and intermediate slopes"
+    days: 3
+    zone: "Standard"
+    level: "Beginner-Intermediate"
+    basePrice: 120
+    image: "images/skipass-standard.jpg"
+  - id: "premium-5day"
+    name: "5 days, premium zone"
+    description: "5-day premium ski pass with access to all slopes"
+    days: 5
+    zone: "Premium"
+    level: "All slopes"
+    basePrice: 280
+    image: "images/skipass-5day.jpg"
+
+availableFlights:
+  - id: "business-class"
+    name: "Business Class Flight"
+    description: "Direct business class flight with priority boarding"
+    airline: "Alpine Air"
+    class: "Business"
+    date: "2024-01-15"
+    time: "10:30"
+    basePrice: 850
+    image: "images/flight-business.jpg"
+  - id: "economy-class"
+    name: "Economy Class Flight"
+    description: "Direct economy class flight with standard service"
+    airline: "Alpine Air"
+    class: "Economy"
+    date: "2024-01-15"
+    time: "10:30"
+    basePrice: 450
+    image: "images/flight-economy.jpg"
+  - id: "premium-economy"
+    name: "Premium Economy Flight"
+    description: "Direct premium economy with extra legroom"
+    airline: "Alpine Air"
+    class: "Premium Economy"
+    date: "2024-01-15"
+    time: "10:30"
+    basePrice: 650
+    image: "images/flight-premium.jpg"
+
+availableInsurance:
+  - id: "comprehensive-coverage"
+    name: "Comprehensive Travel Insurance"
+    description: "Full coverage including medical, cancellation, and equipment"
+    type: "Comprehensive"
+    coverage: ["medical", "cancellation", "baggage", "equipment", "personal-liability"]
+    basePrice: 85
+    image: "images/insurance-comprehensive.jpg"
+  - id: "basic-coverage"
+    name: "Basic Travel Insurance"
+    description: "Essential coverage for medical and emergency evacuation"
+    type: "Basic"
+    coverage: ["medical", "emergency-evacuation"]
+    basePrice: 45
+    image: "images/insurance-basic.jpg"
+  - id: "premium-coverage"
+    name: "Premium Travel Insurance"
+    description: "Maximum coverage with winter sports protection"
+    type: "Premium"
+    coverage: ["medical", "cancellation", "baggage", "equipment", "personal-liability", "winter-sports"]
+    basePrice: 125
+    image: "images/insurance-premium.jpg"
+
+availableTransfers:
+  - id: "private-transfer"
+    name: "Private Airport Transfer"
+    description: "Private shuttle service from Geneva Airport"
+    type: "Private"
+    from: "Geneva Airport"
+    to: "Alpine Heights"
+    basePrice: 85
+    image: "images/transport-private.jpg"
+  - id: "shared-transfer"
+    name: "Shared Airport Transfer"
+    description: "Shared shuttle service from Geneva Airport"
+    type: "Shared"
+    from: "Geneva Airport"
+    to: "Alpine Heights"
+    basePrice: 45
+    image: "images/transport-shared.jpg"
+  - id: "public-transport"
+    name: "Public Transport"
+    description: "Train and bus combination"
+    type: "Public"
+    from: "Geneva Airport"
+    to: "Alpine Heights"
+    basePrice: 25
+    image: "images/transport-public.jpg"
+
+availableAddons:
+  - id: "spa-access"
+    name: "Spa & wellness access"
+    description: "Full access to hotel spa facilities and wellness center"
+    basePrice: 75
+  - id: "mountain-restaurant"
+    name: "Mountain restaurant dining"
+    description: "Premium dining experience at mountain peak restaurant"
+    basePrice: 95
+  - id: "photo-service"
+    name: "Professional ski photography"
+    description: "Professional photographer to capture your ski moments"
+    basePrice: 150
+  - id: "nightlife-pass"
+    name: "Nightlife pass"
+    description: "Access to premium bars and clubs"
+    basePrice: 120
+
+user:
+  preferences:
+    vibe: "Party vibe"
+    budget: "Medium budget"
+    group: "Group of friends"
